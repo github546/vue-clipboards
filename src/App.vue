@@ -7,23 +7,23 @@
      <main class="main">
         <h1>Install</h1>
         <p>You can get it on npm.</p>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="npmCommand"></button><code class="codetxt">{{npmCommand}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="npmCommand" @success="handleSuccess" ></button><code class="codetxt">{{npmCommand}}</code></pre>
         <h1>Usage</h1>
         <h2>copy text</h2>
         <p>how to use</p>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="usageHTML"></button><code class="codetxt">{{usageHTML}}</code></pre>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="usageScript"></button><code class="codetxt">{{usageScript}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="usageHTML" @success="handleSuccess" ></button><code class="codetxt">{{usageHTML}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="usageScript" @success="handleSuccess" ></button><code class="codetxt">{{usageScript}}</code></pre>
         <h1>Event</h1>
         <p>show some user feedback, success or error</p>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="eventHTML" @success="copySuccess" @error="copyError"></button><code class="codetxt">{{eventHTML}}</code></pre>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="eventScript" @success="copySuccess" @error="copyError"></button><code class="codetxt">{{eventScript}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="eventHTML" @success="handleSuccess" @error="handleError"></button><code class="codetxt">{{eventHTML}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="eventScript" @success="handleSuccess" @error="handleError"></button><code class="codetxt">{{eventScript}}</code></pre>
         <h2>cut text</h2>
         <div class="example-box">
             <button class="btn" title="cut" v-clipboard="cutData" @success="cutSuccess"></button>
             <input type="text" name="" v-model="cutData">
         </div>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="cutHTML"></button><code class="codetxt">{{cutHTML}}</code></pre>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="cutScript"></button><code class="codetxt">{{cutScript}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="cutHTML" @success="handleSuccess" ></button><code class="codetxt">{{cutHTML}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="cutScript" @success="handleSuccess" ></button><code class="codetxt">{{cutScript}}</code></pre>
         <h1>Multiple</h1>
         <p>You need to bind an key, when you use vue-clipboards multiple times.</p>
         <div class="example-box">
@@ -32,8 +32,8 @@
             </div>
             <input type="text" class="inp2" name="" placeholder="paste you copy text">
         </div>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="copymoreHTML"></button><code class="codetxt">{{copymoreHTML}}</code></pre>
-        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="copymoreScript"></button><code class="codetxt">{{copymoreScript}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="copymoreHTML" @success="handleSuccess"></button><code class="codetxt">{{copymoreHTML}}</code></pre>
+        <pre class="pretxt"><button class="btn" title="copy" v-clipboard="copymoreScript" @success="handleSuccess"></button><code class="codetxt">{{copymoreScript}}</code></pre>
         <br><br><br>
         <p class="notes">*study this from https://github.com/zhuowenli/vue-clipboards/</p>
      </main>
@@ -41,8 +41,8 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
 import { usageScript,usageHTML,eventHTML,eventScript,cutHTML,cutScript,copymoreHTML,copymoreScript } from './code';
-
 export default {
     name: 'app',
     data(){
@@ -61,11 +61,27 @@ export default {
         }
     },
     methods:{
-        copySuccess(e){
-            console.log(e);
+        handleSuccess(e){
+            //swal("Here's a message!")
+            //swal("Here's a message!", "It's pretty, isn't it?")
+
+            // swal({
+            //   title: "Are you sure?",
+            //   text: "You will not be able to recover this imaginary file!",
+            //   type: "warning",
+            //   showCancelButton: true,
+            //   confirmButtonColor: "#DD6B55",
+            //   confirmButtonText: "Yes, delete it!",
+            //   closeOnConfirm: false
+            // },
+            // function(){
+            //   swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            // });
+
+            swal('Copy Success', '', 'success');
         },
-        copyError(e){
-            console.log(e);
+        handleError(e){
+            swal('Oops...', 'Something went wrong!', 'error');
         },
         cutSuccess(e){
             this.cutData=''
@@ -75,6 +91,7 @@ export default {
 </script>
 
 <style>
+@import "~sweetalert/dist/sweetalert.css";
 *{margin:0;padding:0;outline: 0; box-sizing: border-box;font: 12px "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;}
 .header {padding: 90px 0;color: #fff;text-align: center;}
 .gradient {
